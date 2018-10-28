@@ -99,14 +99,20 @@ public class PlaneController : InputControler
     private void FixedUpdate()
     {
         var rigidbody2D = GetComponent<Rigidbody2D>();
-        //rigidbody2D.angularVelocity = -turnControl * turnSpeed;
-        //rigidbody2D.velocity = transform.right * speed;
+        if (controlledByPlayer)
+        {
+            rigidbody2D.angularVelocity = -turnControl * turnSpeed;
+            rigidbody2D.velocity = transform.right * speed;
+        } else
+        {
+            rigidbody2D.velocity = transform.right * speed;
+        }
+        
 
         //var direction = transform.worldToLocalMatrix.MultiplyVector(transform.right);
         //rigidbody2D.AddForce(transform.TransformDirection(Vector2.right));
 
         //rigidbody2D.velocity = Vector2.ClampMagnitude(rigidbody2D.velocity, maxLinearSpeed);
-        rigidbody2D.velocity = transform.right * speed;
 
 
     }
@@ -207,6 +213,9 @@ public class PlaneController : InputControler
         direction.Normalize();
         float rotateAmount = Vector3.Cross(direction, transform.right).z;
         turnControl = rotateAmount * turnSpeed * Time.deltaTime;
+        Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.angularVelocity = -turnSpeed * rotateAmount;
+
 
         if (dist > followDistance)
         { // S = V0*t+(a*t^2)/2
