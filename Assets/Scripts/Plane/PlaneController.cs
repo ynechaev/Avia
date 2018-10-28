@@ -13,14 +13,17 @@ public class PlaneController : InputControler
     public float boost = 0.8f;
     public float airBrakes = 0.5f;
     public float patrolRadius = 20.0f;
+    public int gunFps = 2;
 
     public Vector2 position;
     public Vector2 velocity;
 
     public ParticleSystem jetTrace;
+    public AudioSource gunAudio;
 
     public float maxSpeed = 3.0f;
     public float minSpeed = 0.2f;
+    public ProjectileScript gunProjectile;
 
     public float followDistance = 10.0f;
 
@@ -33,8 +36,10 @@ public class PlaneController : InputControler
 
     private bool landed;
     private Waypoint currentWaypoint;
+    private float lastShotTime;
 
     private float _turnControl;
+    private bool _fireToggle;
 
     public PlaneController currentTarget;
 
@@ -85,6 +90,19 @@ public class PlaneController : InputControler
         }
     }
 
+    public override bool fireToggle
+    {
+        get
+        {
+            return _fireToggle;
+        }
+
+        protected set
+        {
+            _fireToggle = value;
+        }
+    }
+
     public void SetTarget(PlaneController target)
     {
         currentTarget = target;
@@ -123,6 +141,7 @@ public class PlaneController : InputControler
         {
             SpeedControl();
             SteeringControl();
+            FireControl();
         } else
         {
             if (currentTarget)
@@ -137,6 +156,7 @@ public class PlaneController : InputControler
 
         UpdateSprite();
         UpdateSound();
+        UpdateFiring();
 
         var rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -172,7 +192,6 @@ public class PlaneController : InputControler
         float waypointSpeed = waypoint.recommendedSpeed == 0 ? maxLinearSpeed : waypoint.recommendedSpeed;
         Vector2 direction = (waypoint.position - transform.position).normalized;
         Debug.DrawRay(position, direction, Color.blue);
-        Vector3 x = Vector3.Cross(direction, transform.right);
         float rotateAmount = Vector3.Cross(direction, transform.right).z;
         rigidbody.angularVelocity = -turnSpeed * rotateAmount;
         SetSpeed(waypointSpeed);
@@ -250,6 +269,24 @@ public class PlaneController : InputControler
             {
                 speed = minLinearSpeed;
             }
+        }
+    }
+    
+    void UpdateFiring()
+    {
+        if (fireToggle)
+        {
+            lastShotTime += Time.deltaTime;
+            if (lastShotTime >= 0.1)
+            {
+                ProjectileScript projectile = gunProjectile.GetComponent<ProjectileScript>();
+                Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+
+                projectile.Fire(projectile, rigidbody.velocity);
+                gunAudio.Play();
+                lastShotTime = 0;
+            }
+
         }
     }
 

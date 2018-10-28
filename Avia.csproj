@@ -286,6 +286,7 @@
     <Compile Include="Assets\Scripts\Plane\GameManager.cs" />
     <Compile Include="Assets\Scripts\Plane\InputControler.cs" />
     <Compile Include="Assets\Scripts\Plane\PlaneController.cs" />
+    <Compile Include="Assets\Scripts\Plane\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\Plane\Waypoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,6 +9,7 @@ abstract public class InputControler : MonoBehaviour {
     abstract public float minLinearSpeed { get; }
     abstract public float turnControl { get; set; }
     abstract public float turnBoost { get; protected set; }
+    virtual public bool fireToggle { get; protected set; }
 
     public void SpeedControl()
     {
@@ -25,6 +26,18 @@ abstract public class InputControler : MonoBehaviour {
         {
             var cruiserSpeed = (maxLinearSpeed - minLinearSpeed) / 2;
             SetSpeed(cruiserSpeed);
+        }
+    }
+
+    public void FireControl()
+    {
+        //If the player presses spacebar
+        if (Input.GetKey(KeyCode.Space))
+        {
+            fireToggle = true;
+        } else
+        {
+            fireToggle = false;
         }
     }
 
