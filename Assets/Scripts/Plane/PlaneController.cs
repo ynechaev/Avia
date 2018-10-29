@@ -125,14 +125,6 @@ public class PlaneController : InputControler
         {
             rigidbody2D.velocity = transform.right * speed;
         }
-        
-
-        //var direction = transform.worldToLocalMatrix.MultiplyVector(transform.right);
-        //rigidbody2D.AddForce(transform.TransformDirection(Vector2.right));
-
-        //rigidbody2D.velocity = Vector2.ClampMagnitude(rigidbody2D.velocity, maxLinearSpeed);
-
-
     }
 
     void Update()
