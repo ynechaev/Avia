@@ -282,6 +282,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Camera\SmoothCamera.cs" />
     <Compile Include="Assets\Scripts\Plane\CarrierController.cs" />
     <Compile Include="Assets\Scripts\Plane\GameManager.cs" />
     <Compile Include="Assets\Scripts\Plane\InputControler.cs" />
