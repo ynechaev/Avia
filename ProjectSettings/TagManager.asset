@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - Trails
-  - 
+  - Utilities
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Vehicles
+    uniqueID: 4201229195
+    locked: 0
+  - name: Utilities
+    uniqueID: 2448317423
     locked: 0

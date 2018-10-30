@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class PlaneController : InputControler
 {
+    public SpriteAtlas spriteAtlas;
 
     public bool controlledByPlayer;
 
@@ -284,31 +286,36 @@ public class PlaneController : InputControler
 
     void UpdateSprite()
     {
+        string spriteName;
+        int spriteIndex;
         if (landed)
         {
-            setSprite(GameManager.instance.straightSprite);
-            return;
+            spriteIndex = 5;
         }
         if (turnControl > 0.33f && turnControl < 0.66f) // slightly right
         {
-            setSprite(GameManager.instance.rightSprite0);
+            spriteIndex = 3;
         }
         else if (turnControl >= 0.66f) // right
         {
-            setSprite(GameManager.instance.rightSprite1);
+            spriteIndex = 6;
         }
         else if (turnControl < -0.33f && turnControl > -0.66f) // slightly left
         {
-            setSprite(GameManager.instance.leftSprite0);
+            spriteIndex = 4;
         }
         else if (turnControl <= -0.66f) // left
         {
-            setSprite(GameManager.instance.leftSprite1);
+            spriteIndex = 1;
         }
         else // straight
         {
-            setSprite(GameManager.instance.straightSprite);
+            spriteIndex = 5;
         }
+        spriteName = String.Format("{0}_{1:D}", spriteAtlas.name, spriteIndex);
+        Sprite sprite = spriteAtlas.GetSprite(spriteName);
+        setSprite(sprite);
+
     }
 
     void UpdateSound()
